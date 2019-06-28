@@ -25,6 +25,12 @@ describe DockingStation do
       bike = Bike.new
       expect(subject.dock(bike)).to eq bike
     end
+
+    it 'raises an error if dock is at max capacity' do
+      bike = Bike.new
+      subject.dock(bike)
+      expect { subject.dock(bike) }.to raise_error "Maximum capacity"
+    end
   end
 
   describe '#bike' do
