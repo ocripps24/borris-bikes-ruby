@@ -29,7 +29,7 @@ describe DockingStation do
     end
 
     it 'raises an error if dock is at max capacity' do
-      20.times { station.dock Bike.new }
+      DockingStation::DEFAULT_CAPACITY.times { station.dock Bike.new }
       expect { station.dock Bike.new }.to raise_error "Maximum capacity"
     end
   end
