@@ -29,7 +29,7 @@ describe DockingStation do
       expect(station.release_bike).to eq bike
     end
 
-    it 'releases a bike' do
+    it 'releases a working bike' do
       bike = Bike.new
       station.dock(bike)
       expect(station.release_bike).to be_working
