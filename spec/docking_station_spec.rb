@@ -10,6 +10,11 @@ describe DockingStation do
       expect(station.capacity).to eq DockingStation::DEFAULT_CAPACITY
     end
 
+    it 'defaults capacity' do
+      DockingStation::DEFAULT_CAPACITY.times { subject.dock(bike) }
+      expect { subject.dock(bike) }.to raise_error 'Maximum capacity'
+    end
+
     it 'has a variable capacity' do
       docking_station = DockingStation.new(50)
       50.times { docking_station.dock(bike) }
