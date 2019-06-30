@@ -4,6 +4,12 @@ describe DockingStation do
 
   subject(:station) { described_class.new }
 
+  describe '#initialize' do
+    it 'has a default capacity' do
+      expect(station.capacity).to eq DockingStation::DEFAULT_CAPACITY
+    end
+  end
+
   describe '#release_bike' do
     it 'releases a bike' do
       bike = Bike.new
@@ -29,7 +35,7 @@ describe DockingStation do
     end
 
     it 'raises an error if dock is at max capacity' do
-      DockingStation::DEFAULT_CAPACITY.times { station.dock Bike.new }
+      station.capacity.times { station.dock Bike.new }
       expect { station.dock Bike.new }.to raise_error "Maximum capacity"
     end
   end
