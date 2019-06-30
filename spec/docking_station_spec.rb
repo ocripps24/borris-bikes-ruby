@@ -3,10 +3,17 @@ require 'docking_station'
 describe DockingStation do
 
   subject(:station) { described_class.new }
+  let(:bike) { Bike.new }
 
   describe '#initialize' do
     it 'has a default capacity' do
       expect(station.capacity).to eq DockingStation::DEFAULT_CAPACITY
+    end
+
+    it 'has a variable capacity' do
+      docking_station = DockingStation.new(50)
+      50.times { docking_station.dock(bike) }
+      expect { docking_station.dock(bike) }.to raise_error 'Maximum capacity'
     end
   end
 
@@ -35,8 +42,8 @@ describe DockingStation do
     end
 
     it 'raises an error if dock is at max capacity' do
-      station.capacity.times { station.dock Bike.new }
-      expect { station.dock Bike.new }.to raise_error "Maximum capacity"
+      station.capacity.times { station.dock(bike) }
+      expect { station.dock(bike) }.to raise_error "Maximum capacity"
     end
   end
 
