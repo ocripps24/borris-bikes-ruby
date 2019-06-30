@@ -3,7 +3,7 @@ require 'docking_station'
 describe DockingStation do
 
   subject(:station) { described_class.new }
-  let(:bike) { Bike.new }
+  let(:bike) { double :bike }
 
   describe '#initialize' do
     it 'has a default capacity' do
@@ -24,13 +24,14 @@ describe DockingStation do
 
   describe '#release_bike' do
     it 'releases a bike' do
-      bike = Bike.new
+      allow(bike).to receive(:broken?) { false }
       station.dock(bike)
       expect(station.release_bike).to eq bike
     end
 
     it 'releases a working bike' do
-      bike = Bike.new
+      allow(bike).to receive(:broken?) { false }
+      allow(bike).to receive(:working?) { true }
       station.dock(bike)
       expect(station.release_bike).to be_working
     end
@@ -40,7 +41,6 @@ describe DockingStation do
     end
 
     it 'raises an error if the available bike is broken' do
-      bike = Bike.new
       allow(bike).to receive(:broken?) { true }
       station.dock(bike)
       expect { station.release_bike }.to raise_error "No bikes available"
@@ -49,7 +49,6 @@ describe DockingStation do
 
   describe '#dock' do
     it 'docks a bike' do
-      bike = Bike.new
       expect(station.dock(bike)).to eq station.bikes
     end
 
@@ -61,7 +60,6 @@ describe DockingStation do
 
   describe '#bikes' do
     it 'returns docked bikes' do
-      bike = Bike.new
       station.dock(bike)
       expect(station.bikes).to eq station.bikes
     end
